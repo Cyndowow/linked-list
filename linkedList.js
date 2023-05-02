@@ -1,6 +1,6 @@
-import Node from "./node"
+import Node from "./node.js"
 
-class LinkedList {
+export default class LinkedList {
     constructor() {
         this.listHead = null;
     }
@@ -43,7 +43,7 @@ class LinkedList {
 
     tail() {
         let tmp = this.listHead;
-        while (tmp != null) {
+        while (tmp.nextNode != null) {
             tmp = tmp.nextNode;
         }
         return tmp;
@@ -103,6 +103,38 @@ class LinkedList {
             tmp = tmp.nextNode;
         }
         return (stringlist += " null");
+    }
+
+    insertAt(value, index) {
+        if(this.listHead == null) {
+            this.prepend(value);
+        } else {
+            let cur = this.listHead;
+            let prev = null;
+            for (let i = 0; i < index; i++) {
+                prev = cur;
+                cur = cur.nextNode;
+                if (cur == null) break;
+            }
+            const tmp = new Node(value);
+            prev.nextNode = tmp;
+            tmp.nextNode = cur;
+        }
+    }
+
+    removeAt(index) {
+        if(this.listHead == null) {
+            return "This list is empty.";
+        }
+    
+        let cur = this.listHead;
+        let prev = null;
+        for(let i = 0; i < index; i++) {
+            prev = cur;
+            cur = cur.nextNode;
+            if (cur == null) return "No item found at index."
+        }
+        prev.nextNode = cur.nextNode;
     }
 
 }
